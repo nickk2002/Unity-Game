@@ -6,7 +6,8 @@ public class ItemBox : MonoBehaviour
 {   
     public enum ItemType
     {
-        Pistol
+        Pistol,
+        AK47
     }
     [Header("Values")]
     [SerializeField] ItemType itemtype;
