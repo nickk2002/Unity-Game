@@ -44,7 +44,7 @@ public abstract class Weapon
             itemSprite = Resources.Load<Sprite>("Images/" + itemName);
             bulletSprite = Resources.Load<Sprite>("Images/" + itemName + "bullets");
             if(itemSprite != null && bulletSprite != null)
-                Debug.Log("TE IUBESC MULT!");
+                Debug.Log("TE IUBESC FOARTE MULT!");
             else
                 Debug.LogWarning("Now you fucked up!");
         }
