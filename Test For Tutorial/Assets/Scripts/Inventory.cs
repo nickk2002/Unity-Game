@@ -25,8 +25,8 @@ public class Inventory : InventoryItem
     private void DisplayWeaponAndBullets(int index,Weapon weapon)
     {
         Debug.Log("Suntem la indexul : " + index);
-        GameObject slotImage = transform.GetChild(0).GetChild(index * 2).GetChild(0).gameObject;
-        GameObject slotBullets = transform.GetChild(0).GetChild(index * 2 + 1).GetChild(0).gameObject;
+        GameObject slotImage = transform.GetChild(index * 2).GetChild(0).gameObject;
+        GameObject slotBullets = transform.GetChild(index * 2 + 1).GetChild(0).gameObject;
         
         Image iconSprite = slotImage.GetComponent<Image>();
         iconSprite.sprite = weapon.itemSprite;

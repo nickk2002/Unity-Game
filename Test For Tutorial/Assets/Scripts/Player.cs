@@ -10,6 +10,7 @@ public class Player : MonoBehaviour
     void Start()
     {
         Weapons = new List<Weapon>();
+        inventory.gameObject.SetActive(false);
     }
 
     // Update is called once per frame

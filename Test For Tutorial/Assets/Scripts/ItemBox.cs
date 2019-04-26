@@ -16,7 +16,6 @@ public class ItemBox : MonoBehaviour
     private GameObject floatingObject;
     private float curentyRotation = 0.0f,initialY,curentY;
     [SerializeField] float rotationSpeed,updownSpeed,maxDist;
-    private int clipAmmunition = 0;
 
     public ItemType Type { get { return itemtype; } }
     public int Amount { get { return itemAmount; } }
@@ -24,20 +23,25 @@ public class ItemBox : MonoBehaviour
 
     void Start()
     {
-        floatingObject = transform.GetChild(0).gameObject;
         initialY = floatingObject.transform.position.y;
         curentY = initialY;
     }
     void Update()
     {
-        if (floatingObject == null)
-            return;
-        if (Mathf.Abs(curentY - initialY) >= maxDist)
-            updownSpeed = -updownSpeed;
-        floatingObject.transform.position = new Vector3(floatingObject.transform.position.x, curentY, floatingObject.transform.position.z);
-        floatingObject.transform.rotation = Quaternion.Euler(floatingObject.transform.rotation.x, curentyRotation, floatingObject.transform.rotation.z);
-        curentyRotation = curentyRotation + rotationSpeed * Time.deltaTime;
-        curentY += updownSpeed * Time.deltaTime;
+        foreach (Transform child in transform)
+        {
+            floatingObject = child.gameObject;
+            Start();
+            if (floatingObject == null)
+                return;
+            if (Mathf.Abs(curentY - initialY) >= maxDist)
+                updownSpeed = -updownSpeed;
+            floatingObject.transform.position = new Vector3(floatingObject.transform.position.x, curentY, floatingObject.transform.position.z);
+            floatingObject.transform.rotation = Quaternion.Euler(floatingObject.transform.rotation.x, curentyRotation, floatingObject.transform.rotation.z);
+            curentyRotation = curentyRotation + rotationSpeed * Time.deltaTime;
+            curentY += updownSpeed * Time.deltaTime;
+        }
     }
+
 
 }
