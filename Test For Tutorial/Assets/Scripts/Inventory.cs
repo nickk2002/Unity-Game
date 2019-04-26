@@ -17,7 +17,6 @@ public class Inventory : InventoryItem
     }
     void FixedUpdate()
     {
-
         if (Input.GetKeyDown(KeyCode.I))
             inventory.SetActive(true);
         else if (Input.GetKeyUp(KeyCode.I))
