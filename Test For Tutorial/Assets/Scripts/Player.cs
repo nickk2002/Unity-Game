@@ -26,6 +26,7 @@ public class Player : MonoBehaviour
         Debug.Log("DA");
         if(otherCollider.gameObject.transform.parent.GetComponent<ItemBox>() != null)
         {
+            Debug.Log(otherCollider.name);
             ItemBox itembox = otherCollider.gameObject.transform.parent.GetComponent<ItemBox>();         
             GiveItem(itembox.Type, itembox.Amount);
             Destroy(otherCollider.gameObject);
@@ -35,6 +36,7 @@ public class Player : MonoBehaviour
         if(type == ItemBox.ItemType.Pistol)
         {
             Weapon curweapon = null;
+           
             for(int i = 0; i < Weapons.Count; i++)
             {
                 if (Weapons[i] is Pistol)
@@ -44,6 +46,25 @@ public class Player : MonoBehaviour
             if (curweapon == null)
             {
                 curweapon = new Pistol();
+                selectedWeapon = curweapon;
+                Weapons.Add(selectedWeapon);
+                inventory.AddItem(selectedWeapon);
+            }
+            selectedWeapon.AddAmmuntion(amount);
+            selectedWeapon.LoadClip();
+        }
+        if (type == ItemBox.ItemType.AK47)
+        {
+            Weapon curweapon = null;
+            for (int i = 0; i < Weapons.Count; i++)
+            {
+                if (Weapons[i] is AK47)
+                    curweapon = Weapons[i];
+            }
+
+            if (curweapon == null)
+            {
+                curweapon = new AK47();
                 selectedWeapon = curweapon;
                 Weapons.Add(selectedWeapon);
                 inventory.AddItem(selectedWeapon);
