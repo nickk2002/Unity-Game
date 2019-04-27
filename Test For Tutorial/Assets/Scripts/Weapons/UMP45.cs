@@ -2,14 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AK47 : Weapon {
-    public AK47()
+public class UMP45 : Weapon
+{
+    public UMP45()
     {
         clipSize = 30;
         reloadTime = 2.0f;
         cooldownTime = 0.25f;
         isAutomatic = true;
-        itemName = "AK47";
+        itemName = "UMP45";
         LoadImage();
     }
 }

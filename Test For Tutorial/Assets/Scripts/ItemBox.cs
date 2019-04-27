@@ -7,7 +7,8 @@ public class ItemBox : MonoBehaviour
     public enum ItemType
     {
         Pistol,
-        AK47
+        AK47,
+        UMP45
     }
     [Header("Values")]
     [SerializeField] ItemType itemtype;
@@ -15,8 +16,8 @@ public class ItemBox : MonoBehaviour
 
     [Header("Visuals")]
     private GameObject floatingObject;
-    private float curentyRotation = 0.0f,initialY,curentY;
-    [SerializeField] float rotationSpeed,updownSpeed,maxDist;
+    private float curentyRotation = 0.0f,x,z;
+    [SerializeField] float rotationSpeed,updownSpeed = 1,maxDist;
 
     public ItemType Type { get { return itemtype; } }
     public int Amount { get { return itemAmount; } }
@@ -24,23 +25,21 @@ public class ItemBox : MonoBehaviour
 
     void Start()
     {
-        initialY = floatingObject.transform.position.y;
-        curentY = initialY;
+        
     }
-    void Update()
+    void LateUpdate()
     {
         foreach (Transform child in transform)
         {
             floatingObject = child.gameObject;
-            Start();
             if (floatingObject == null)
                 return;
-            if (Mathf.Abs(curentY - initialY) >= maxDist)
+            /*if (Mathf.Abs(curentY - initialY) >= maxDist)
                 updownSpeed = -updownSpeed;
-            floatingObject.transform.position = new Vector3(floatingObject.transform.position.x, curentY, floatingObject.transform.position.z);
-            floatingObject.transform.rotation = Quaternion.Euler(floatingObject.transform.rotation.x, curentyRotation, floatingObject.transform.rotation.z);
-            curentyRotation = curentyRotation + rotationSpeed * Time.deltaTime;
-            curentY += updownSpeed * Time.deltaTime;
+            floatingObject.transform.rotation * new Vector3(0, curentY, 0) * Time.deltaTime*/
+            floatingObject.transform.localRotation = Quaternion.Euler(0, curentyRotation * Time.deltaTime,transform.localRotation.z);
+            Debug.Log(floatingObject.transform.rotation);
+            curentyRotation = curentyRotation + rotationSpeed;
         }
     }
 
