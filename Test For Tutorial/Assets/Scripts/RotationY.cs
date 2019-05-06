@@ -10,7 +10,7 @@ public class RotationY : MonoBehaviour
     private float time = 0.0f;
     void Start()
     {
-        Debug.Log(transform.rotation.eulerAngles.x + "and" + transform.rotation.eulerAngles.z);
+        ///Debug.Log("Rotation :" + transform.rotation.eulerAngles.x + " and " + transform.rotation.eulerAngles.z);
         curentY = transform.localPosition.y;
     }
 

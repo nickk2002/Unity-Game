@@ -9,22 +9,35 @@ public class Inventory : InventoryItem
     private const int allSlots = 5;
     private int enabledSlots;
     private Sprite [] ItemSprites = new Sprite [allSlots];
-    [SerializeField] GameObject inventory;
+    [SerializeField] GameObject reference;
     
     void Start()
     {
         enabledSlots = 0;
     }
-    void FixedUpdate()
+    private void SelectWeapon(Weapon weapon)
     {
-        if (Input.GetKeyDown(KeyCode.I))
-            inventory.SetActive(true);
-        else if (Input.GetKeyUp(KeyCode.I))
-            inventory.SetActive(false);
+        Debug.Log(weapon.itemName);
+
+        if (Camera.main.transform.childCount > 0)
+        {
+            GameObject ak = Camera.main.transform.GetChild(0).gameObject;
+            ak.transform.parent = null;
+            Destroy(ak);
+        }
+        Debug.Log("Reference : " + reference.transform.position + "Camera : " + Camera.main.transform.position);
+        GameObject Generated;
+        Generated = Instantiate(weapon.Prefab);
+        Generated.transform.parent = Camera.main.transform;
+
+        Debug.Log("Prefab : " + weapon.Prefab.transform.position + "and weapon : " + weapon.position);
+       
+        Generated.transform.localPosition = weapon.Prefab.transform.position;
+        Generated.transform.localEulerAngles = weapon.Prefab.transform.rotation.eulerAngles;
     }
     private void DisplayWeaponAndBullets(int index,Weapon weapon)
     {
-        Debug.Log("Suntem la indexul : " + index);
+        //Debug.Log("Suntem la indexul : " + index);
         GameObject slotImage = transform.GetChild(index * 2).GetChild(0).gameObject;
         GameObject slotBullets = transform.GetChild(index * 2 + 1).GetChild(0).gameObject;
         
@@ -32,18 +45,15 @@ public class Inventory : InventoryItem
         iconSprite.sprite = weapon.itemSprite;
         Image iconBullets = slotBullets.GetComponent<Image>();
         iconBullets.sprite = weapon.bulletSprite;
-        //slotBullets.transform.parent.GetChild(1).GetComponent<Text>().text = "Contains";
     }
-    public void DisplayBulletsUI(Weapon weapon)
-    {
-        //GameObject BulletsText = transform.GetChild(0).GetChild
-    }
+
     public void AddItem(Weapon weapon)
     {
         if (weapon.itemSprite != null) {
             Sprite ceva = weapon.itemSprite;
             ItemSprites[enabledSlots] = ceva;
             DisplayWeaponAndBullets(enabledSlots, weapon);
+            SelectWeapon(weapon);
             ++enabledSlots;
         }   
     }

@@ -15,7 +15,8 @@ public abstract class Weapon
     
     public string itemName, itemDescription;
     public Sprite itemSprite,bulletSprite;
-
+    public GameObject Prefab;
+    public Vector3 position, rotation;
     public int ClipAmmunition{ get{ return clipAmmunition; } set{ clipAmmunition = value;} }
     public int TotalAmmunition { get { return totalAmmunition; } set { totalAmmunition = value; } }
     public int ClipSize { get { return clipSize; } }
@@ -37,17 +38,15 @@ public abstract class Weapon
     }
     public void LoadImage()
     {
-
         if (itemSprite == null)
         {
-            
+            Prefab = Resources.Load<GameObject>("Prefabs/Weapons/" + itemName);
             itemSprite = Resources.Load<Sprite>("Images/" + itemName);
             bulletSprite = Resources.Load<Sprite>("Images/" + itemName + "bullets");
-            if(itemSprite != null && bulletSprite != null)
-                Debug.Log("TE IUBESC FOARTE MULT!");
+            if (itemSprite != null && bulletSprite != null && Prefab != null)
+                Debug.Log(itemName + "Loaded succesfully Te iubesc iepuras");
             else
                 Debug.LogWarning("Now you fucked up!");
         }
-       
     }
 }
