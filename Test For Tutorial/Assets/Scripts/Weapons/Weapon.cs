@@ -44,7 +44,7 @@ public abstract class Weapon
             itemSprite = Resources.Load<Sprite>("Images/" + itemName);
             bulletSprite = Resources.Load<Sprite>("Images/" + itemName + "bullets");
             if (itemSprite != null && bulletSprite != null && Prefab != null)
-                Debug.Log(itemName + "Loaded succesfully Te iubesc iepuras");
+                Debug.Log(itemName + "Loaded succesfully");
             else
                 Debug.LogWarning("Now you fucked up!");
         }
