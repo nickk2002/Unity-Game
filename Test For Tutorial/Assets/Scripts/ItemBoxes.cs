@@ -20,7 +20,7 @@ public class ItemBoxes : MonoBehaviour
     [SerializeField] int minX,maxX,minZ,maxZ;
     [SerializeField] GameObject Prefab;
     public Transform[] PrefabTransform;
-    private float positionY = 1.893f;
+    private float positionY = 1.593f;
     GameObject Generated;
 
     public ItemType Type { get { return itemtype; } }

@@ -5,7 +5,10 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     private List<Weapon> Weapons;  
-    private Weapon selectedWeapon;
+    private Weapon selectedWeapon,foundWeapon;
+    private int indexWeapon;
+    private GameObject objectWeapon = null;
+    private float curentY,time;
     [SerializeField] Inventory inventory;
     void Start()
     {
@@ -20,15 +23,21 @@ public class Player : MonoBehaviour
     }
 
     // Update is called once per frame
-
     private void OnTriggerEnter(Collider otherCollider)
     {
-        if(otherCollider.gameObject.transform.parent != null && otherCollider.gameObject.transform.parent.GetComponent<ItemBoxes>() != null)
+        if(otherCollider.gameObject.transform.parent != null && otherCollider.gameObject.transform.parent.GetComponent<ItemBoxes>() != null )
         {
-            Debug.Log(otherCollider.name);
-            ItemBoxes itembox = otherCollider.gameObject.transform.parent.GetComponent<ItemBoxes>();         
+            foundWeapon = null;
+            ItemBoxes itembox = otherCollider.gameObject.transform.parent.GetComponent<ItemBoxes>();
             GiveItem(itembox.Type, itembox.Amount);
-            Destroy(otherCollider.gameObject);
+                
+            if (foundWeapon == null)
+            {
+                Debug.Log(otherCollider.gameObject);
+                Debug.Log(objectWeapon);
+                Destroy(otherCollider.gameObject);
+            }
+            
         }
     }
     private void GiveItem(ItemBoxes.ItemType type,int amount) {
@@ -41,16 +50,23 @@ public class Player : MonoBehaviour
             currentWeapon = new UMP45();
         else if (type == ItemBoxes.ItemType.M4A1)
             currentWeapon = new M4A1();
-        Weapon foundWeapon = null;
-           
-        for(int i = 0; i < Weapons.Count; i++)
+        for (int i = 0; i < Weapons.Count; i++)
+        {
             if (Weapons[i].itemName == currentWeapon.itemName)
+            {
                 foundWeapon = Weapons[i];
+                indexWeapon = i;
+                objectWeapon = transform.GetChild(0).GetChild(i).gameObject;
+                break;
+            }
+        }
         if (foundWeapon == null)
         {
+            Debug.Log("New Weapon");
             selectedWeapon = currentWeapon;
             Weapons.Add(selectedWeapon);
             inventory.AddItem(selectedWeapon);
+            objectWeapon = transform.GetChild(0).GetChild(Weapons.Count - 1).gameObject;
         }
         selectedWeapon.AddAmmuntion(amount);
         selectedWeapon.LoadClip();
@@ -65,17 +81,30 @@ public class Player : MonoBehaviour
     }
     void InspectWeapon()
     {
-        
-        if (Input.GetKeyDown(KeyCode.F) && selectedWeapon != null)
-        {   
-            Vector3 rotation = selectedWeapon.Prefab.transform.rotation.eulerAngles;
-            rotation.y += 10.0f;
-
+        if (selectedWeapon == null)
+            return;
+        Quaternion rotation = selectedWeapon.Prefab.transform.rotation;
+        Quaternion modifiedRotation = Quaternion.Euler(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y + curentY, transform.rotation.eulerAngles.x);
+        if (Input.GetKey(KeyCode.F) && selectedWeapon != null)
+        {
+            Debug.Log(time);
+            
+            objectWeapon.transform.localRotation = Quaternion.Slerp(rotation,modifiedRotation, time);
+            if (curentY >= -100)
+            {
+                curentY -= 5.0f;
+                time += Time.deltaTime;
+            }
         }
-
+        else
+        {
+            //curentY = 0;
+            //objectWeapon.transform.localRotation = Quaternion.Slerp(objectWeapon.transform.rotation,rotation,time);
+        }
     }
     void Update()
     {
         ShowInventory();
+        InspectWeapon();
     }
 }

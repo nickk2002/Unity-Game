@@ -18,20 +18,15 @@ public class Inventory : InventoryItem
     private void SelectWeapon(Weapon weapon)
     {
         Debug.Log(weapon.itemName);
-
         if (Camera.main.transform.childCount > 0)
         {
-            GameObject ak = Camera.main.transform.GetChild(0).gameObject;
-            ak.transform.parent = null;
-            Destroy(ak);
+            GameObject obj = Camera.main.transform.GetChild(0).gameObject;
+            obj.transform.parent = null;
+            Destroy(obj);
         }
-        Debug.Log("Reference : " + reference.transform.position + "Camera : " + Camera.main.transform.position);
         GameObject Generated;
         Generated = Instantiate(weapon.Prefab);
         Generated.transform.parent = Camera.main.transform;
-
-        Debug.Log("Prefab : " + weapon.Prefab.transform.position + "and weapon : " + weapon.position);
-       
         Generated.transform.localPosition = weapon.Prefab.transform.position;
         Generated.transform.localEulerAngles = weapon.Prefab.transform.rotation.eulerAngles;
     }
