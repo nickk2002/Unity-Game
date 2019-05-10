@@ -8,8 +8,6 @@ public class Inventory : InventoryItem
 
     private const int allSlots = 5;
     private int enabledSlots;
-    private Sprite [] ItemSprites = new Sprite [allSlots];
-    [SerializeField] GameObject reference;
     
     void Start()
     {
@@ -17,13 +15,8 @@ public class Inventory : InventoryItem
     }
     private void SelectWeapon(Weapon weapon)
     {
-        Debug.Log(weapon.itemName);
-        if (Camera.main.transform.childCount > 0)
-        {
-            GameObject obj = Camera.main.transform.GetChild(0).gameObject;
-            obj.transform.parent = null;
-            Destroy(obj);
-        }
+        //Debug.Log(weapon.itemName);
+
         GameObject Generated;
         Generated = Instantiate(weapon.Prefab);
         Generated.transform.parent = Camera.main.transform;
@@ -45,11 +38,9 @@ public class Inventory : InventoryItem
     public void AddItem(Weapon weapon)
     {
         if (weapon.itemSprite != null) {
-            Sprite ceva = weapon.itemSprite;
-            ItemSprites[enabledSlots] = ceva;
             DisplayWeaponAndBullets(enabledSlots, weapon);
             SelectWeapon(weapon);
-            ++enabledSlots;
+            ++enabledSlots; 
         }   
     }
 }

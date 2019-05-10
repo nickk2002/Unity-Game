@@ -6,21 +6,12 @@ public class Player : MonoBehaviour
 {
     private List<Weapon> Weapons;  
     private Weapon selectedWeapon,foundWeapon;
-    private int indexWeapon;
+    private int indexWeapon = -1;
     private GameObject objectWeapon = null;
     private float curentY,time;
+    private WaitForSeconds scrollTime = new WaitForSeconds(13.5f);
     [SerializeField] Inventory inventory;
-    void Start()
-    {
-        Weapons = new List<Weapon>();
-        inventory.gameObject.SetActive(false);
-        /*Debug.Log("FPS Controller "  + transform.position);
-        Debug.Log("FPS Character " + this.transform.GetChild(0).transform.position);
-        Debug.Log("FPS Character local positon" + this.transform.GetChild(0).transform.localPosition);
-        Debug.Log("AK47 " + this.transform.GetChild(0).GetChild(0).transform.position);
-        Debug.Log("Ak47 local positon" + this.transform.GetChild(0).GetChild(0).transform.localPosition);*/
 
-    }
 
     // Update is called once per frame
     private void OnTriggerEnter(Collider otherCollider)
@@ -33,8 +24,8 @@ public class Player : MonoBehaviour
                 
             if (foundWeapon == null)
             {
-                Debug.Log(otherCollider.gameObject);
-                Debug.Log(objectWeapon);
+                //Debug.Log(otherCollider.gameObject);
+                //Debug.Log(objectWeapon);
                 Destroy(otherCollider.gameObject);
             }
             
@@ -55,23 +46,26 @@ public class Player : MonoBehaviour
             if (Weapons[i].itemName == currentWeapon.itemName)
             {
                 foundWeapon = Weapons[i];
-                indexWeapon = i;
                 objectWeapon = transform.GetChild(0).GetChild(i).gameObject;
-                break;
             }
         }
+       
         if (foundWeapon == null)
-        {
-            Debug.Log("New Weapon");
+        {   
+            //Debug.Log("New Weapon");
             selectedWeapon = currentWeapon;
             Weapons.Add(selectedWeapon);
             inventory.AddItem(selectedWeapon);
-            objectWeapon = transform.GetChild(0).GetChild(Weapons.Count - 1).gameObject;
+        }
+        if (indexWeapon == -1)
+        {
+            indexWeapon = Weapons.Count - 1;
+            //Debug.Log("indexWeapon : " + indexWeapon);
         }
         selectedWeapon.AddAmmuntion(amount);
         selectedWeapon.LoadClip();
     }
-    void ShowInventory()
+    private void ToggleInventory()
     {
         
         if (Input.GetKeyDown(KeyCode.I))
@@ -79,7 +73,44 @@ public class Player : MonoBehaviour
         else if (Input.GetKeyUp(KeyCode.I))
             inventory.gameObject.SetActive(false);
     }
-    void InspectWeapon()
+    void WeaponActive()
+    {
+        if (indexWeapon == -1)
+            return;
+        objectWeapon = Camera.main.transform.GetChild(indexWeapon).gameObject;
+        objectWeapon.SetActive(true);
+        for (int i = 0; i < Weapons.Count; i++)
+            if (i != indexWeapon)
+            {
+                ///Debug.Log("finally");
+                Camera.main.transform.GetChild(i).gameObject.SetActive(false);
+            }
+    }
+    private void SwitchWeapon()
+    {
+
+        if (indexWeapon == -1)
+        {
+            ///Debug.Log("No weapons");
+            return;
+        }
+        //Debug.Log("WE have a weapon at index : " + indexWeapon);
+        Camera.main.transform.GetChild(indexWeapon).gameObject.SetActive(true);
+        if(Input.GetAxis("Mouse ScrollWheel") > 0f)
+        {
+            indexWeapon++;
+            indexWeapon %= Camera.main.transform.childCount;
+
+        }
+        else if(Input.GetAxis("Mouse ScrollWheel") < 0f)
+        {
+            indexWeapon--;
+            if (indexWeapon < 0)
+                indexWeapon = Camera.main.transform.childCount - 1;
+
+        }
+    }
+    private void InspectWeapon()
     {
         if (selectedWeapon == null)
             return;
@@ -96,15 +127,19 @@ public class Player : MonoBehaviour
                 time += Time.deltaTime;
             }
         }
-        else
-        {
-            //curentY = 0;
-            //objectWeapon.transform.localRotation = Quaternion.Slerp(objectWeapon.transform.rotation,rotation,time);
-        }
+    }
+
+    void Start()
+    {
+        Weapons = new List<Weapon>();
+        inventory.gameObject.SetActive(false);
+        
     }
     void Update()
     {
-        ShowInventory();
+        ToggleInventory();
+        SwitchWeapon();
+        WeaponActive();
         InspectWeapon();
     }
 }
