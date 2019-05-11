@@ -17,30 +17,26 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     private void OnTriggerEnter(Collider otherCollider)
     {
-        if(otherCollider.gameObject.transform.parent != null && otherCollider.gameObject.transform.parent.GetComponent<ItemBoxes>() != null )
+        if(otherCollider.gameObject.transform.parent != null && otherCollider.gameObject.GetComponent<InventoryItem>() != null )
         {
             foundWeapon = null;
-            ItemBoxes itembox = otherCollider.gameObject.transform.parent.GetComponent<ItemBoxes>();
+            InventoryItem itembox = otherCollider.gameObject.transform.GetComponent<InventoryItem>();
             GiveItem(itembox.Type, itembox.Amount);
-                
-            if (foundWeapon == null)
-            {
-                //Debug.Log(otherCollider.gameObject);
-                //Debug.Log(objectWeapon);
-                Destroy(otherCollider.gameObject);
-            }
-            
+            Debug.Log(itembox.gameObject.name);
+            //if (foundWeapon == null)
+                ///Destroy(otherCollider.gameObject);
+           
         }
     }
-    private void GiveItem(ItemBoxes.ItemType type,int amount) {
+    private void GiveItem(InventoryItem.ItemType type,int amount) {
         Weapon currentWeapon = null;
-        if (type == ItemBoxes.ItemType.Pistol)
+        if (type == InventoryItem.ItemType.Pistol)
             currentWeapon = new Pistol();
-        else if (type == ItemBoxes.ItemType.AK47)
+        else if (type == InventoryItem.ItemType.AK47)
             currentWeapon = new AK47();
-        else if (type == ItemBoxes.ItemType.UMP45)
+        else if (type == InventoryItem.ItemType.UMP45)
             currentWeapon = new UMP45();
-        else if (type == ItemBoxes.ItemType.M4A1)
+        else if (type == InventoryItem.ItemType.M4A1)
             currentWeapon = new M4A1();
 
         for (int i = 0; i < Weapons.Count; i++)
@@ -61,7 +57,6 @@ public class Player : MonoBehaviour
         if (indexWeapon == -1)
         {
             indexWeapon = Weapons.Count - 1;
-            
         }
         selectedWeapon.AddAmmuntion(amount);
         selectedWeapon.LoadClip();
@@ -70,7 +65,20 @@ public class Player : MonoBehaviour
     {
         
         if (Input.GetKeyDown(KeyCode.I))
-            inventory.gameObject.SetActive(!inventory.gameObject.active);
+        {
+            if (inventory.gameObject.active)
+            {
+                inventory.gameObject.SetActive(false);
+                Cursor.visible = false;
+            }
+            else
+            {
+                inventory.gameObject.SetActive(true);
+                Cursor.visible = true;
+                Debug.Log("Cursor is visible");
+            }
+        }
+
     }
     void WeaponActive()
     {
@@ -142,6 +150,7 @@ public class Player : MonoBehaviour
                 slot.gameObject.SetActive(false);
         }*/
         nextScroll = scrollTime;
+        Cursor.visible = false;
     }
     void Update()
     {

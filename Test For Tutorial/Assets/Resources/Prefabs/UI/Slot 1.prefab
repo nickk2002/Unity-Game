@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 254751499}
   - component: {fileID: 254751498}
   m_Layer: 5
-  m_Name: Loot
+  m_Name: Slot 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -111,7 +111,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -16.7, y: 0}
+  m_AnchoredPosition: {x: -16.7, y: -0.00000023841858}
   m_SizeDelta: {x: 108.54999, y: 23.07}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!222 &2139111092
@@ -155,7 +155,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: '
+  m_Text: 'M14A4
 
 '
 --- !u!225 &2139111090
@@ -167,7 +167,7 @@ CanvasGroup:
   m_GameObject: {fileID: 2139111088}
   m_Enabled: 1
   m_Alpha: 1
-  m_Interactable: 0
+  m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 1
 --- !u!1001 &354490679738676817
@@ -286,36 +286,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 354490679955669385, guid: 1512bcf31b102944faa39fb992f89889,
-        type: 3}
-      propertyPath: m_Color.r
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 354490679955669385, guid: 1512bcf31b102944faa39fb992f89889,
-        type: 3}
-      propertyPath: m_Color.g
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 354490679955669385, guid: 1512bcf31b102944faa39fb992f89889,
-        type: 3}
-      propertyPath: m_Color.b
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 354490679955669384, guid: 1512bcf31b102944faa39fb992f89889,
-        type: 3}
-      propertyPath: m_IgnoreParentGroups
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 354490679955669384, guid: 1512bcf31b102944faa39fb992f89889,
-        type: 3}
-      propertyPath: m_Alpha
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 354490679955669384, guid: 1512bcf31b102944faa39fb992f89889,
-        type: 3}
-      propertyPath: m_Interactable
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1512bcf31b102944faa39fb992f89889, type: 3}
