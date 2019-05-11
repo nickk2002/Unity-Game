@@ -8,37 +8,36 @@ public class Shooting : MonoBehaviour
     private float time;
     [SerializeField] float damage = 10.0f;
     [SerializeField] float range = 100.0f;
-    private WaitForSeconds shotDuration = new WaitForSeconds(0.57f);
-    private float nextFire = 0.0f;
+    private float nextFire;
       
     private void Start()
     {
         fpsCamera = Camera.main;
     }
-    private IEnumerator Shoot()
+    private void Shoot()
     {
         RaycastHit hit;
         
-        if(Physics.Raycast(fpsCamera.transform.position, fpsCamera.transform.forward, out hit))
+        if(Physics.Raycast(fpsCamera.transform.position, fpsCamera.transform.forward, out hit,range))
         {
             
             Enemy enemy = hit.transform.GetComponent<Enemy>();
             if(enemy != null)
             {
                 enemy.TakeDamage(damage);
-                Debug.Log("start waiting");
-                yield return shotDuration;
-                Debug.Log("not waiting");
+                ///lastShot = System.DateTime.Now;
             }
             
         }
     }
     void Update()
     {
-        if(Input.GetButtonDown("Fire1") && Time.time > nextFire)
+        float timeBetweenShots = .5f;
+        nextFire += Time.deltaTime;
+        if (Input.GetButtonDown("Fire1") && nextFire >= timeBetweenShots)
         {
-            StartCoroutine(Shoot());
-            nextFire += Time.deltaTime;
+            nextFire = 0.0f;
+            Shoot();
         }
     }
 }

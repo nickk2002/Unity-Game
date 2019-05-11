@@ -17,7 +17,7 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     private void OnTriggerEnter(Collider otherCollider)
     {
-        if(otherCollider.gameObject.transform.parent != null && otherCollider.gameObject.GetComponent<InventoryItem>() != null )
+        if(otherCollider.gameObject.GetComponent<InventoryItem>() != null)
         {
             foundWeapon = null;
             InventoryItem itembox = otherCollider.gameObject.transform.GetComponent<InventoryItem>();
@@ -25,7 +25,14 @@ public class Player : MonoBehaviour
             Debug.Log(itembox.gameObject.name);
             //if (foundWeapon == null)
                 ///Destroy(otherCollider.gameObject);
-           
+        }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if(other.gameObject.GetComponent<InventoryItem>() != null)
+        {
+            InventoryItem obj = other.gameObject.GetComponent<InventoryItem>();
+            RemoveItem(obj.Type);
         }
     }
     private void GiveItem(InventoryItem.ItemType type,int amount) {
@@ -44,7 +51,7 @@ public class Player : MonoBehaviour
             if (Weapons[i].itemName == currentWeapon.itemName)
             {
                 foundWeapon = Weapons[i];
-                objectWeapon = transform.GetChild(0).GetChild(i).gameObject;
+                //objectWeapon = transform.GetChild(0).GetChild(i).gameObject;
             }
         }
        
@@ -60,6 +67,14 @@ public class Player : MonoBehaviour
         }
         selectedWeapon.AddAmmuntion(amount);
         selectedWeapon.LoadClip();
+    }
+    private void RemoveItem(InventoryItem.ItemType type)
+    {
+        GameObject loot = inventory.transform.GetChild(1).gameObject;
+        foreach(Transform child in loot.transform)
+        {
+
+        }
     }
     private void ToggleInventory()
     {
