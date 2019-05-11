@@ -8,8 +8,9 @@ public class Player : MonoBehaviour
     private Weapon selectedWeapon,foundWeapon;
     private int indexWeapon = -1;
     private GameObject objectWeapon = null;
-    private float curentY,time;
-    private WaitForSeconds scrollTime = new WaitForSeconds(13.5f);
+    private float curentY;
+    [SerializeField] float scrollTime = 0.5f,inspectTIme = 0;
+    private float nextScroll;
     [SerializeField] Inventory inventory;
 
 
@@ -41,6 +42,7 @@ public class Player : MonoBehaviour
             currentWeapon = new UMP45();
         else if (type == ItemBoxes.ItemType.M4A1)
             currentWeapon = new M4A1();
+
         for (int i = 0; i < Weapons.Count; i++)
         {
             if (Weapons[i].itemName == currentWeapon.itemName)
@@ -51,8 +53,7 @@ public class Player : MonoBehaviour
         }
        
         if (foundWeapon == null)
-        {   
-            //Debug.Log("New Weapon");
+        {
             selectedWeapon = currentWeapon;
             Weapons.Add(selectedWeapon);
             inventory.AddItem(selectedWeapon);
@@ -60,7 +61,7 @@ public class Player : MonoBehaviour
         if (indexWeapon == -1)
         {
             indexWeapon = Weapons.Count - 1;
-            //Debug.Log("indexWeapon : " + indexWeapon);
+            
         }
         selectedWeapon.AddAmmuntion(amount);
         selectedWeapon.LoadClip();
@@ -69,9 +70,7 @@ public class Player : MonoBehaviour
     {
         
         if (Input.GetKeyDown(KeyCode.I))
-            inventory.gameObject.SetActive(true);
-        else if (Input.GetKeyUp(KeyCode.I))
-            inventory.gameObject.SetActive(false);
+            inventory.gameObject.SetActive(!inventory.gameObject.active);
     }
     void WeaponActive()
     {
@@ -89,26 +88,28 @@ public class Player : MonoBehaviour
     private void SwitchWeapon()
     {
 
-        if (indexWeapon == -1)
-        {
+        if (indexWeapon == -1) {
             ///Debug.Log("No weapons");
             return;
         }
-        //Debug.Log("WE have a weapon at index : " + indexWeapon);
+        //Debug.Log("WE have a weapon at index : " + indexWeapon)
         Camera.main.transform.GetChild(indexWeapon).gameObject.SetActive(true);
-        if(Input.GetAxis("Mouse ScrollWheel") > 0f)
+        if (Input.GetAxis("Mouse ScrollWheel") > 0f && nextScroll >= scrollTime)
         {
             indexWeapon++;
             indexWeapon %= Camera.main.transform.childCount;
-
+            nextScroll = 0;
+            
         }
-        else if(Input.GetAxis("Mouse ScrollWheel") < 0f)
+        else if (Input.GetAxis("Mouse ScrollWheel") < 0f && nextScroll >= scrollTime)
         {
             indexWeapon--;
             if (indexWeapon < 0)
                 indexWeapon = Camera.main.transform.childCount - 1;
-
+            nextScroll = 0;
         }
+        nextScroll += Time.deltaTime;
+        
     }
     private void InspectWeapon()
     {
@@ -117,14 +118,16 @@ public class Player : MonoBehaviour
         Quaternion rotation = selectedWeapon.Prefab.transform.rotation;
         Quaternion modifiedRotation = Quaternion.Euler(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y + curentY, transform.rotation.eulerAngles.x);
         if (Input.GetKey(KeyCode.F) && selectedWeapon != null)
-        {
-            Debug.Log(time);
-            
-            objectWeapon.transform.localRotation = Quaternion.Slerp(rotation,modifiedRotation, time);
+        {            
+            objectWeapon.transform.localRotation = Quaternion.Slerp(rotation,modifiedRotation, inspectTIme);
             if (curentY >= -100)
             {
                 curentY -= 5.0f;
-                time += Time.deltaTime;
+                inspectTIme += Time.deltaTime;
+            }
+            else
+            {
+                inspectTIme -= Time.deltaTime;
             }
         }
     }
@@ -133,7 +136,12 @@ public class Player : MonoBehaviour
     {
         Weapons = new List<Weapon>();
         inventory.gameObject.SetActive(false);
-        
+        /*foreach(Transform child in inventory.transform)
+        {
+            foreach (Transform slot in child.transform)
+                slot.gameObject.SetActive(false);
+        }*/
+        nextScroll = scrollTime;
     }
     void Update()
     {

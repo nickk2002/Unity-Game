@@ -48,11 +48,8 @@ public abstract class Weapon
 
            if (itemSprite != null && bulletSprite != null && Prefab != null)
                 Debug.Log(itemName + "Loaded succesfully Te iubesc iepuras");
-
-            if (itemSprite != null && bulletSprite != null && Prefab != null)
-                Debug.Log(itemName + "Loaded succesfully");
             else
-                Debug.LogWarning("Now you fucked up!"); 
+                Debug.LogError("Now you fucked up!"); 
         }
     }
 }
