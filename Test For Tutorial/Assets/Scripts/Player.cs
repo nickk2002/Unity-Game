@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
@@ -22,9 +23,6 @@ public class Player : MonoBehaviour
             foundWeapon = null;
             InventoryItem itembox = otherCollider.gameObject.transform.GetComponent<InventoryItem>();
             GiveItem(itembox.Type, itembox.Amount);
-            Debug.Log(itembox.gameObject.name);
-            //if (foundWeapon == null)
-                ///Destroy(otherCollider.gameObject);
         }
     }
     private void OnTriggerExit(Collider other)
@@ -36,6 +34,7 @@ public class Player : MonoBehaviour
         }
     }
     private void GiveItem(InventoryItem.ItemType type,int amount) {
+        
         Weapon currentWeapon = null;
         if (type == InventoryItem.ItemType.Pistol)
             currentWeapon = new Pistol();
@@ -46,17 +45,13 @@ public class Player : MonoBehaviour
         else if (type == InventoryItem.ItemType.M4A1)
             currentWeapon = new M4A1();
 
-        for (int i = 0; i < Weapons.Count; i++)
-        {
+        for (int i = 0; i < Weapons.Count; i++)  
             if (Weapons[i].itemName == currentWeapon.itemName)
-            {
                 foundWeapon = Weapons[i];
-                //objectWeapon = transform.GetChild(0).GetChild(i).gameObject;
-            }
-        }
-       
+        Debug.Log(Weapons.Count);
         if (foundWeapon == null)
         {
+            Debug.Log("New weapon" + currentWeapon.itemName);
             selectedWeapon = currentWeapon;
             Weapons.Add(selectedWeapon);
             inventory.AddItem(selectedWeapon);
@@ -70,9 +65,35 @@ public class Player : MonoBehaviour
     }
     private void RemoveItem(InventoryItem.ItemType type)
     {
+        Weapon currentWeapon = null;
+        if (type == InventoryItem.ItemType.Pistol)
+            currentWeapon = new Pistol();
+        else if (type == InventoryItem.ItemType.AK47)
+            currentWeapon = new AK47();
+        else if (type == InventoryItem.ItemType.UMP45)
+            currentWeapon = new UMP45();
+        else if (type == InventoryItem.ItemType.M4A1)
+            currentWeapon = new M4A1();
         GameObject loot = inventory.transform.GetChild(1).gameObject;
         foreach(Transform child in loot.transform)
         {
+            GameObject slot = child.GetChild(1).gameObject;
+            if (slot.GetComponent<Text>().text == currentWeapon.itemName && currentWeapon != null)
+            {
+                for(int i = 0; i < Weapons.Count; i++)
+                {
+                    if (Weapons[i].itemName == currentWeapon.itemName)
+                    {
+                        Debug.Log("Removed weapon : " + currentWeapon.itemName);
+                        Weapons.RemoveAt(i);
+                        Debug.Log("Weapons Size : " + Weapons.Count);
+                        break;
+                    }
+
+                }
+
+                Destroy(child.gameObject);
+            }
 
         }
     }
@@ -111,11 +132,9 @@ public class Player : MonoBehaviour
     private void SwitchWeapon()
     {
 
-        if (indexWeapon == -1) {
-            ///Debug.Log("No weapons");
+        if (indexWeapon == -1) 
             return;
-        }
-        //Debug.Log("WE have a weapon at index : " + indexWeapon)
+        
         Camera.main.transform.GetChild(indexWeapon).gameObject.SetActive(true);
         if (Input.GetAxis("Mouse ScrollWheel") > 0f && nextScroll >= scrollTime)
         {
@@ -170,8 +189,8 @@ public class Player : MonoBehaviour
     void Update()
     {
         ToggleInventory();
-        SwitchWeapon();
-        WeaponActive();
+        //SwitchWeapon();
+        //WeaponActive();
         InspectWeapon();
     }
 }

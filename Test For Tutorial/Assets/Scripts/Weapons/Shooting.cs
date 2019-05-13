@@ -21,7 +21,7 @@ public class Shooting : MonoBehaviour
         if(Physics.Raycast(fpsCamera.transform.position, fpsCamera.transform.forward, out hit,range))
         {
             
-            Enemy enemy = hit.transform.GetComponent<Enemy>();
+            Health enemy = hit.transform.GetComponent<Health>();
             if(enemy != null)
             {
                 enemy.TakeDamage(damage);

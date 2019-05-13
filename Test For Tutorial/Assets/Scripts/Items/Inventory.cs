@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Inventory : InventoryItem
+public class Inventory : MonoBehaviour
 {
 
     private const int allSlots = 5;
@@ -35,7 +35,7 @@ public class Inventory : InventoryItem
     private void DisplayWeaponAndBullets(int index,Weapon weapon)
     {
         GameObject slotImage = Instantiate(slotPrefab,slotPrefab.transform.position,slotPrefab.transform.rotation) as GameObject;
-        slotImage.transform.parent = transform.GetChild(1);
+        slotImage.transform.SetParent(transform.GetChild(1),false);
         slotImage.transform.localScale = slotPrefab.transform.localScale;
         Image iconSprite = slotImage.transform.GetChild(0).gameObject.GetComponent<Image>();
         slotImage.transform.GetChild(1).gameObject.GetComponent<Text>().text = weapon.itemName;
