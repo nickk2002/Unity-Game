@@ -18,7 +18,7 @@ public class InventoryItem : MonoBehaviour {
     public Transform[] PrefabTransform;
     int positionY;
 
-    public ItemType Type { get { return itemtype; } }
+    public ItemType Type { set { itemtype = value; } get { return itemtype; } }
     public int Amount { get { return itemAmount; } }
 
     void Update()

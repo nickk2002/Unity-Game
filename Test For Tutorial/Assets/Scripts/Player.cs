@@ -54,12 +54,9 @@ public class Player : MonoBehaviour
             Debug.Log("New weapon" + currentWeapon.itemName);
             selectedWeapon = currentWeapon;
             Weapons.Add(selectedWeapon);
-            inventory.AddItem(selectedWeapon);
+            inventory.AddItem(selectedWeapon,type);
         }
-        if (indexWeapon == -1)
-        {
-            indexWeapon = Weapons.Count - 1;
-        }
+
         selectedWeapon.AddAmmuntion(amount);
         selectedWeapon.LoadClip();
     }
@@ -111,14 +108,13 @@ public class Player : MonoBehaviour
             {
                 inventory.gameObject.SetActive(true);
                 Cursor.visible = true;
-                Debug.Log("Cursor is visible");
             }
         }
 
     }
     void WeaponActive()
     {
-        if (indexWeapon == -1)
+        if (Camera.main.transform.childCount == 0)
             return;
         objectWeapon = Camera.main.transform.GetChild(indexWeapon).gameObject;
         objectWeapon.SetActive(true);
@@ -131,8 +127,7 @@ public class Player : MonoBehaviour
     }
     private void SwitchWeapon()
     {
-
-        if (indexWeapon == -1) 
+        if (Camera.main.transform.childCount == 0)
             return;
         
         Camera.main.transform.GetChild(indexWeapon).gameObject.SetActive(true);
@@ -155,7 +150,7 @@ public class Player : MonoBehaviour
     }
     private void InspectWeapon()
     {
-        if (selectedWeapon == null)
+        if (Camera.main.transform.childCount == 0)
             return;
         Quaternion rotation = selectedWeapon.Prefab.transform.rotation;
         Quaternion modifiedRotation = Quaternion.Euler(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y + curentY, transform.rotation.eulerAngles.x);
@@ -176,21 +171,23 @@ public class Player : MonoBehaviour
 
     void Start()
     {
+        GameObject weaponsInventory = GameObject.Find("Weapons");
+        if (weaponsInventory == null)
+            Debug.LogError("not found Weapons");
+        foreach (Transform child in weaponsInventory.transform)
+        {
+            child.gameObject.SetActive(false);
+        }
         Weapons = new List<Weapon>();
         inventory.gameObject.SetActive(false);
-        /*foreach(Transform child in inventory.transform)
-        {
-            foreach (Transform slot in child.transform)
-                slot.gameObject.SetActive(false);
-        }*/
         nextScroll = scrollTime;
         Cursor.visible = false;
     }
     void Update()
     {
         ToggleInventory();
-        //SwitchWeapon();
-        //WeaponActive();
+        SwitchWeapon();
+        WeaponActive();
         InspectWeapon();
     }
 }

@@ -24,28 +24,22 @@ public class Inventory : MonoBehaviour
             Debug.LogError("SlotPrefab not loaded!");
         Debug.Log(inventoryMaterial);
     }
-    private void SelectWeapon(Weapon weapon)
-    {            
-        GameObject Generated;
-        Generated = Instantiate(weapon.Prefab);
-        Generated.transform.parent = Camera.main.transform;
-        Generated.transform.localPosition = weapon.Prefab.transform.position;
-        Generated.transform.localEulerAngles = weapon.Prefab.transform.rotation.eulerAngles;
-    }
-    private void DisplayWeaponAndBullets(int index,Weapon weapon)
+
+    private void DisplayWeaponAndBullets(int index,Weapon weapon, InventoryItem.ItemType type)
     {
         GameObject slotImage = Instantiate(slotPrefab,slotPrefab.transform.position,slotPrefab.transform.rotation) as GameObject;
         slotImage.transform.SetParent(transform.GetChild(1),false);
         slotImage.transform.localScale = slotPrefab.transform.localScale;
+        slotImage.GetComponent<InventoryItem>().Type = type;
         Image iconSprite = slotImage.transform.GetChild(0).gameObject.GetComponent<Image>();
         slotImage.transform.GetChild(1).gameObject.GetComponent<Text>().text = weapon.itemName;
         iconSprite.sprite = weapon.itemSprite;
     }
         
-    public void AddItem(Weapon weapon)
+    public void AddItem(Weapon weapon,InventoryItem.ItemType type)
     {
         if (weapon.itemSprite != null) {
-            DisplayWeaponAndBullets(enabledSlots, weapon);
+            DisplayWeaponAndBullets(enabledSlots, weapon, type);
             //SelectWeapon(weapon);
             ++enabledSlots;
         }   
