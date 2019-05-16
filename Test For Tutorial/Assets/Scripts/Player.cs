@@ -5,14 +5,14 @@ using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
-    private List<Weapon> Weapons;  
+    private int itemNumber;  
     private Weapon selectedWeapon,foundWeapon;
-    private int indexWeapon = -1;
+    public int indexWeapon = -1;
     private GameObject objectWeapon = null;
     private float curentY;
     [SerializeField] float scrollTime = 0.5f,inspectTIme = 0;
     private float nextScroll;
-    [SerializeField] Inventory inventory;
+    [SerializeField] Inventory inventory,allInventory;
 
 
     // Update is called once per frame
@@ -45,15 +45,12 @@ public class Player : MonoBehaviour
         else if (type == InventoryItem.ItemType.M4A1)
             currentWeapon = new M4A1();
 
-        for (int i = 0; i < Weapons.Count; i++)  
-            if (Weapons[i].itemName == currentWeapon.itemName)
-                foundWeapon = Weapons[i];
-        Debug.Log(Weapons.Count);
-        if (foundWeapon == null)
+        Debug.Log(itemNumber);
+        if (!inventory.Find(currentWeapon))
         {
+            itemNumber++;
             Debug.Log("New weapon" + currentWeapon.itemName);
             selectedWeapon = currentWeapon;
-            Weapons.Add(selectedWeapon);
             inventory.AddItem(selectedWeapon,type);
         }
 
@@ -71,42 +68,21 @@ public class Player : MonoBehaviour
             currentWeapon = new UMP45();
         else if (type == InventoryItem.ItemType.M4A1)
             currentWeapon = new M4A1();
-        GameObject loot = inventory.transform.GetChild(1).gameObject;
-        foreach(Transform child in loot.transform)
-        {
-            GameObject slot = child.GetChild(1).gameObject;
-            if (slot.GetComponent<Text>().text == currentWeapon.itemName && currentWeapon != null)
-            {
-                for(int i = 0; i < Weapons.Count; i++)
-                {
-                    if (Weapons[i].itemName == currentWeapon.itemName)
-                    {
-                        Debug.Log("Removed weapon : " + currentWeapon.itemName);
-                        Weapons.RemoveAt(i);
-                        Debug.Log("Weapons Size : " + Weapons.Count);
-                        break;
-                    }
-
-                }
-
-                Destroy(child.gameObject);
-            }
-
-        }
+        inventory.RemoveItem(currentWeapon);
     }
     private void ToggleInventory()
     {
         
         if (Input.GetKeyDown(KeyCode.I))
         {
-            if (inventory.gameObject.active)
+            if (allInventory.gameObject.active)
             {
-                inventory.gameObject.SetActive(false);
+                allInventory.gameObject.SetActive(false);
                 Cursor.visible = false;
             }
             else
             {
-                inventory.gameObject.SetActive(true);
+                allInventory.gameObject.SetActive(true);
                 Cursor.visible = true;
             }
         }
@@ -118,12 +94,13 @@ public class Player : MonoBehaviour
             return;
         objectWeapon = Camera.main.transform.GetChild(indexWeapon).gameObject;
         objectWeapon.SetActive(true);
-        for (int i = 0; i < Weapons.Count; i++)
+        for (int i = 0; i < Camera.main.transform.childCount; i++)
+        {
             if (i != indexWeapon)
             {
-                ///Debug.Log("finally");
                 Camera.main.transform.GetChild(i).gameObject.SetActive(false);
             }
+        }
     }
     private void SwitchWeapon()
     {
@@ -178,8 +155,8 @@ public class Player : MonoBehaviour
         {
             child.gameObject.SetActive(false);
         }
-        Weapons = new List<Weapon>();
-        inventory.gameObject.SetActive(false);
+        itemNumber = 0;
+        allInventory.gameObject.SetActive(false);
         nextScroll = scrollTime;
         Cursor.visible = false;
     }

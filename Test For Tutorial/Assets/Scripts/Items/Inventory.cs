@@ -7,6 +7,7 @@ public class Inventory : MonoBehaviour
 {
 
     private const int allSlots = 5;
+    private List<Weapon> Items;
     private int enabledSlots;
     private GameObject slotPrefab;
     private Material inventoryMaterial;
@@ -15,6 +16,7 @@ public class Inventory : MonoBehaviour
 
     void Start()
     {
+        Items = new List<Weapon>();
         enabledSlots = 0;
         slotPrefab = Resources.Load("Prefabs/UI/Loot") as GameObject;
         inventoryMaterial = Resources.Load<Material>("Prefabs/Materials/Inventory");
@@ -24,11 +26,21 @@ public class Inventory : MonoBehaviour
             Debug.LogError("SlotPrefab not loaded!");
         Debug.Log(inventoryMaterial);
     }
-
-    private void DisplayWeaponAndBullets(int index,Weapon weapon, InventoryItem.ItemType type)
+    public bool Find(Weapon weapon)
+    {
+        for(int i = 0; i < Items.Count; i++)
+        {
+            if (Items[i].itemName == weapon.itemName)
+                return true;
+        }
+        return false;
+    }
+    private void DisplayImage(int index,Weapon weapon, InventoryItem.ItemType type)
     {
         GameObject slotImage = Instantiate(slotPrefab,slotPrefab.transform.position,slotPrefab.transform.rotation) as GameObject;
-        slotImage.transform.SetParent(transform.GetChild(1),false);
+        Debug.Log("Instatiated");
+        GameObject loot = this.gameObject;
+        slotImage.transform.SetParent(loot.transform,false);
         slotImage.transform.localScale = slotPrefab.transform.localScale;
         slotImage.GetComponent<InventoryItem>().Type = type;
         Image iconSprite = slotImage.transform.GetChild(0).gameObject.GetComponent<Image>();
@@ -39,9 +51,33 @@ public class Inventory : MonoBehaviour
     public void AddItem(Weapon weapon,InventoryItem.ItemType type)
     {
         if (weapon.itemSprite != null) {
-            DisplayWeaponAndBullets(enabledSlots, weapon, type);
-            //SelectWeapon(weapon);
+            DisplayImage(enabledSlots, weapon, type);
+            Items.Add(weapon);
             ++enabledSlots;
         }   
+    }
+    public void RemoveItem(Weapon weapon)
+    {
+        GameObject loot = this.gameObject;
+        foreach (Transform child in loot.transform)
+        {
+            GameObject slot = child.GetChild(1).gameObject;
+            if (slot.GetComponent<Text>().text == weapon.itemName && weapon != null)
+            {
+                for (int i = 0; i < Items.Count; i++)
+                {
+                    if (Items[i].itemName == weapon.itemName)
+                    {
+                        Debug.Log("Removed weapon : " + weapon.itemName);
+                        Items.RemoveAt(i);
+                        Debug.Log("Weapons Size : " + Items.Count);
+                        break;
+                    }
+
+                }
+                Destroy(child.gameObject);
+            }
+
+        }
     }
 }
