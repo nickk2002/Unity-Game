@@ -22,6 +22,7 @@ public class Player : MonoBehaviour
         {
             foundWeapon = null;
             InventoryItem itembox = otherCollider.gameObject.transform.GetComponent<InventoryItem>();
+            
             GiveItem(itembox.Type, itembox.Amount);
         }
     }
@@ -30,6 +31,8 @@ public class Player : MonoBehaviour
         if(other.gameObject.GetComponent<InventoryItem>() != null)
         {
             InventoryItem obj = other.gameObject.GetComponent<InventoryItem>();
+            if(itemNumber >= 0)
+                itemNumber--;
             RemoveItem(obj.Type);
         }
     }

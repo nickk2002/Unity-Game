@@ -26,7 +26,7 @@ public class RightInventory : MonoBehaviour
         for (int i = 0; i < this.transform.childCount; i++)
         {
             GameObject child = this.transform.GetChild(i).gameObject;
-            if (!child.gameObject.active)
+            if (!child.gameObject.active)   
                 return i;
         }
         return -1;
@@ -53,13 +53,13 @@ public class RightInventory : MonoBehaviour
             currentWeapon = new M4A1();
         if(FreeIndex() != -1 && !Find(currentWeapon))
         {
+            if (player.indexWeapon == -1)
+                player.indexWeapon++;
             GameObject curentChild = this.transform.GetChild(FreeIndex()).gameObject;
             curentChild.SetActive(true);
             curentChild.GetComponent<Image>().sprite = obj.GetComponent<Image>().sprite;
             Weapons.Add(currentWeapon);
             SelectWeapon(currentWeapon);
-            if (player.indexWeapon == -1)
-                player.indexWeapon++;
         }
     }
 }
