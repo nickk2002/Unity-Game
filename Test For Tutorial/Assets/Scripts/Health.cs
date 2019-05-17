@@ -12,7 +12,9 @@ public class Health : MonoBehaviour
         if (health <= 0f)
         {
             if (gameObject == GameObject.Find("FPSController"))
+            {
                 DeadScreen.SetActive(true);
+            }
             Destroy(gameObject);
         }
     }
