@@ -15,6 +15,7 @@ public class Player : MonoBehaviour
     [SerializeField] Inventory inventory,allInventory;
 
 
+
     // Update is called once per frame
     private void OnTriggerEnter(Collider otherCollider)
     {
@@ -128,29 +129,31 @@ public class Player : MonoBehaviour
         nextScroll += Time.deltaTime;
         
     }
+    private void SwitchWeaponNumberKey()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+
+        }
+
+    }
     private void InspectWeapon()
     {
         if (Camera.main.transform.childCount == 0)
             return;
-        Quaternion rotation = selectedWeapon.Prefab.transform.rotation;
-        Quaternion modifiedRotation = Quaternion.Euler(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y + curentY, transform.rotation.eulerAngles.x);
+        Vector3 rotation = selectedWeapon.Prefab.transform.rotation.eulerAngles;
+        float value = 15;
+        Vector3 modifiedRotation = new Vector3(rotation.x,rotation.y + 15, rotation.z);
         if (Input.GetKey(KeyCode.F) && selectedWeapon != null)
         {            
-            objectWeapon.transform.localRotation = Quaternion.Slerp(rotation,modifiedRotation, inspectTIme);
-            if (curentY >= -100)
-            {
-                curentY -= 5.0f;
-                inspectTIme += Time.deltaTime;
-            }
-            else
-            {
-                inspectTIme -= Time.deltaTime;
-            }
+            objectWeapon.transform.eulerAngles = Vector3.Lerp(rotation,modifiedRotation, inspectTIme);
+            Debug.Log("Insepcting");
         }
     }
 
     void Start()
     {
+
         GameObject weaponsInventory = GameObject.Find("Weapons");
         if (weaponsInventory == null)
             Debug.LogError("not found Weapons");

@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2992312626384563851}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: UMP45
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 5034958406769772792}
   - component: {fileID: 5627112959328759403}
   - component: {fileID: 14173665184888041}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: UMP-45_Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -121,7 +121,7 @@ GameObject:
   - component: {fileID: 33349877804081810}
   - component: {fileID: 317077883019890192}
   - component: {fileID: 2634893145964541801}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: UMP-45_Mag
   m_TagString: Untagged
   m_Icon: {fileID: 0}

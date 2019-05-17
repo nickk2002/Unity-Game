@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1631574760}
   - component: {fileID: 1631574762}
   - component: {fileID: 1631574761}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: M4A1_Sopmod_Magazine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -88,7 +88,7 @@ GameObject:
   - component: {fileID: 1800790948}
   - component: {fileID: 1800790950}
   - component: {fileID: 1800790949}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: M4A1_Sopmod_Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -166,7 +166,7 @@ GameObject:
   - component: {fileID: 1970457985}
   - component: {fileID: 1970457987}
   - component: {fileID: 1970457986}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: M4A1_Sopmod_Iron_Sight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -241,7 +241,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1991691062}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: M4A1
   m_TagString: Untagged
   m_Icon: {fileID: 0}

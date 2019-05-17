@@ -17,6 +17,7 @@ public class ClickItem : MonoBehaviour
     {
         if (Input.GetButtonDown("Fire1"))
         {
+            Debug.Log("CliCked : " + this.gameObject);
             inventory.AddItem(this.gameObject);
         }
     }

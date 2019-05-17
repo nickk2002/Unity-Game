@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 561121285}
   - component: {fileID: 561121287}
   - component: {fileID: 561121286}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Ak47Mag
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -88,7 +88,7 @@ GameObject:
   - component: {fileID: 1391782641}
   - component: {fileID: 1391782643}
   - component: {fileID: 1391782642}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Cube_001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -163,7 +163,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1520624147}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: AK47
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -198,7 +198,7 @@ GameObject:
   - component: {fileID: 1760902875}
   - component: {fileID: 1760902877}
   - component: {fileID: 1760902876}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Ak47Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
