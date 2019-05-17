@@ -4,14 +4,16 @@ using UnityEngine;
 
 public class AIdamage : MonoBehaviour
 {
-    public GameObject player;
+    private GameObject player;
     public float maximumDistance;
     public float botDamage;
     public float damageTime = 1.0f;
     public float nextDamage = 0;
     void Start()
     {
-        
+        player = GameObject.Find("FPSController");
+        if (player == null)
+            Debug.LogError("Player not found");
     }
 
     void Update()

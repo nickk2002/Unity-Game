@@ -1,0 +1,121 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1062832687
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1062832688}
+  - component: {fileID: 1062832692}
+  - component: {fileID: 1062832691}
+  - component: {fileID: 1062832690}
+  - component: {fileID: 1062832689}
+  m_Layer: 0
+  m_Name: MedievelHouse
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1062832688
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1062832687}
+  m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: -35.7, y: 2.1, z: 9.7}
+  m_LocalScale: {x: 12.656121, y: 8.698037, z: 5.6829042}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!33 &1062832692
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1062832687}
+  m_Mesh: {fileID: 4300000, guid: 20bfb4291f41f984d8ea01bed5392d00, type: 3}
+--- !u!23 &1062832691
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1062832687}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 297c927677ebaa94ea9d7c82501772e8, type: 2}
+  - {fileID: 2100000, guid: 297c927677ebaa94ea9d7c82501772e8, type: 2}
+  - {fileID: 2100000, guid: f6c31b5841a4b3543b19f0b749264b5e, type: 2}
+  - {fileID: 2100000, guid: 94d9d11ddb643474e8b13abc44c35f56, type: 2}
+  - {fileID: 2100000, guid: a5af2578b921af44e9b2d0d9f0ed0d44, type: 2}
+  - {fileID: 2100000, guid: 8b4cce2b1c29ef3468b19060415a2835, type: 2}
+  - {fileID: 2100000, guid: 09f8cff74b624374a8224e1a56b528a3, type: 2}
+  - {fileID: 2100000, guid: a5af2578b921af44e9b2d0d9f0ed0d44, type: 2}
+  - {fileID: 2100000, guid: 355c5669dae652548bb4daa8eae208f6, type: 2}
+  - {fileID: 2100000, guid: 226ae656fcb48ac4da86ecb499b54561, type: 2}
+  - {fileID: 2100000, guid: 8b4cce2b1c29ef3468b19060415a2835, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+--- !u!64 &1062832690
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1062832687}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Convex: 0
+  m_CookingOptions: 14
+  m_Mesh: {fileID: 4300000, guid: 20bfb4291f41f984d8ea01bed5392d00, type: 3}
+--- !u!111 &1062832689
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1062832687}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: 20bfb4291f41f984d8ea01bed5392d00, type: 3}
+  m_Animations:
+  - {fileID: 7400000, guid: 20bfb4291f41f984d8ea01bed5392d00, type: 3}
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0

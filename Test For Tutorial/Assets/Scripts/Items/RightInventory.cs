@@ -36,6 +36,8 @@ public class RightInventory : MonoBehaviour
         GameObject Generated;
         Generated = Instantiate(weapon.Prefab);
         Generated.transform.parent = Camera.main.transform;
+        RotationY comp = Generated.GetComponent<RotationY>();
+        Destroy(comp);
         Generated.transform.localPosition = weapon.Prefab.transform.position;
         Generated.transform.localEulerAngles = weapon.Prefab.transform.rotation.eulerAngles;
     }

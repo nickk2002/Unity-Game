@@ -172,5 +172,6 @@ public class Player : MonoBehaviour
         SwitchWeapon();
         WeaponActive();
         InspectWeapon();
+        Debug.Log("Cursor is : " + Cursor.visible);
     }
 }

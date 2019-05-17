@@ -12,7 +12,7 @@ public class GenerateItems : MonoBehaviour
     [SerializeField] GameObject Prefab;
     public Transform[] PrefabTransform;
     int positionY;
-    GameObject Generated, Refence;
+    GameObject Generated;
 
     private int GetRandom(int left, int right)
     {
@@ -40,16 +40,17 @@ public class GenerateItems : MonoBehaviour
         //Debug.Log("at Position : " + Generated.transform.localPosition);
         Generated.transform.rotation = Prefab.transform.rotation;
         //Debug.Log("Tatal : " + Generated.transform.parent);
-        Generated.AddComponent<RotationY>();
-        Generated.AddComponent<SphereCollider>();
-        Generated.GetComponent<SphereCollider>().isTrigger = true;
-        Generated.GetComponent<SphereCollider>().radius *= 3;
-        Generated.AddComponent<InventoryItem>().itemtype = type;
+        if (Prefab.GetComponent<RotationY>() != null)
+        {
+            Generated.AddComponent<SphereCollider>();
+            Generated.GetComponent<SphereCollider>().isTrigger = true;
+            Generated.GetComponent<SphereCollider>().radius *= 3;
+            Generated.AddComponent<InventoryItem>().itemtype = type;
+        }
         
     }
     void Start()
     {
-        Refence = GameObject.Find("Where");
         PrefabTransform = new Transform[itemAmount];
         for (int i = 0; i < itemAmount; i++)
         {
