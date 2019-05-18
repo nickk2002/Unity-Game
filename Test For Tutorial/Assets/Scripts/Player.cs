@@ -77,7 +77,7 @@ public class Player : MonoBehaviour
     private void ToggleInventory()
     {
         
-        if (Input.GetKeyDown(KeyCode.I))
+        if (Input.GetKeyDown(KeyCode.Tab))
         {
             if (allInventory.gameObject.active)
             {
