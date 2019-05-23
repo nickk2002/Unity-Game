@@ -7,12 +7,9 @@ using System.Security.Cryptography;
 public class GenerateItems : MonoBehaviour
 {
     [SerializeField] InventoryItem.ItemType type;
-    [SerializeField] int itemAmount;
-    [SerializeField] int minX, maxX, minZ, maxZ;
     [SerializeField] GameObject Prefab;
-    public Transform[] PrefabTransform;
-    int positionY;
-    GameObject Generated;
+    //int positionY;
+
 
     private int GetRandom(int left, int right)
     {
@@ -31,31 +28,33 @@ public class GenerateItems : MonoBehaviour
         }
     }
 
-    private void CreatePrefab()
+    private IEnumerator CreatePrefab(Transform chilTransform)
     {
-        Vector3 position = new Vector3(GetRandom(minX, maxX), positionY, GetRandom(minZ, maxZ));
-        Generated = Instantiate(Prefab) as GameObject;
-        Generated.transform.parent = this.transform;
-        Generated.transform.localPosition = position;
-        //Debug.Log("at Position : " + Generated.transform.localPosition);
+        Vector3 positionObj = chilTransform.position;
+        Destroy(chilTransform.gameObject);
+        GameObject Generated = Instantiate(Prefab) as GameObject;
+        Generated.transform.position = positionObj;
         Generated.transform.rotation = Prefab.transform.rotation;
-        //Debug.Log("Tatal : " + Generated.transform.parent);
-        if (Prefab.GetComponent<RotationY>() != null)
+        yield return new WaitForSeconds(0.01f);
+        Generated.transform.SetParent(this.transform);
+
+        if (Generated.GetComponent<RotationY>() != null)
         {
             Generated.AddComponent<SphereCollider>();
             Generated.GetComponent<SphereCollider>().isTrigger = true;
-            Generated.GetComponent<SphereCollider>().radius *= 3;
+            Generated.GetComponent<SphereCollider>().radius *= 5;
             Generated.AddComponent<InventoryItem>().itemtype = type;
+            Generated.AddComponent<Rigidbody>();
+            Generated.GetComponent<Rigidbody>().useGravity = false;
         }
-        
+
     }
     void Start()
     {
-        PrefabTransform = new Transform[itemAmount];
-        for (int i = 0; i < itemAmount; i++)
+        Transform initialTranfrom = this.transform;
+        foreach(Transform child in initialTranfrom)
         {
-            CreatePrefab();
-            PrefabTransform[i] = Prefab.transform;
+            StartCoroutine(CreatePrefab(child));
         }
     }
 }

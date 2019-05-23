@@ -15,10 +15,16 @@ public class ClickItem : MonoBehaviour
     }
     private void Update()
     {
-        if (Input.GetButtonDown("Fire1"))
+        if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-            Debug.Log("CliCked : " + this.gameObject);
-            inventory.AddItem(this.gameObject);
+            Debug.Log("CliCked : " + this.gameObject + " Inventory : " + inventory);
+            
+            GameObject loot = this.transform.parent.gameObject;
+            InventoryItem inventoyItem = loot.GetComponent<InventoryItem>();
+            inventory.AddItem(inventoyItem.Type);
+            GameObject toDestory = inventoyItem.Reference;
+            Destroy(toDestory);
+            Destroy(loot);
         }
     }
 }
